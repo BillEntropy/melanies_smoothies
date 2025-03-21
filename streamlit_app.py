@@ -1,5 +1,6 @@
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 cnx = st.connection("snowflake")
 session = cnx.session()
@@ -23,3 +24,5 @@ if ing_list:
     if sumbit:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered!', icon="✅")
+
+smoothiefroot_res = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon)
