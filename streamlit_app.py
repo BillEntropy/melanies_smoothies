@@ -1,10 +1,12 @@
 import streamlit as st
 from snowflake.snowpark.functions import col
 import requests
+import pandas as pd
 
 cnx = st.connection("snowflake")
 session = cnx.session()
-my_df = session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME"))
+my_df = session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME"),col("search_on"))
+pd_df=my_df.to_pandas()
 #st.dataframe(my_df, use_container_width=True)
 
 # Write directly to the app
@@ -15,7 +17,8 @@ name = st.text_input('Name on smoothie:')
 
 ing_list = st.multiselect('Choose <= 5 ingredients!',my_df, max_selections=5)
 if ing_list:
-    sf_res = [requests.get(f"https://my.smoothiefroot.com/api/fruit/{ing_list[fruit]}").json() for fruit in range(len(ing_list))]
+    sf_res = [requests.get(f"https://my.smoothiefroot.com/api/fruit/{ing_list[fruit]}").json()\
+              for fruit in pd_df.loc[pd_df['FRUIT_NAME'] == fruit].iloc[0]]
     st_df = [st.dataframe(data=res, use_container_width=True) for res in sf_res]
     ing_str = ' '.join(ing_list)
     #st.write(ing_str)
