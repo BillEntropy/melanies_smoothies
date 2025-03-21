@@ -2,7 +2,7 @@ import streamlit as st
 from snowflake.snowpark.functions import col
 
 cnx = st.connection("snowflake")
-session = get_active_session()
+session = cnx.session()
 my_df = session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME"))
 #st.dataframe(my_df, use_container_width=True)
 
