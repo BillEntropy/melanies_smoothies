@@ -25,4 +25,4 @@ if ing_list:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered!', icon="✅")
 
-smoothiefroot_res = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon)
+smoothiefroot_res = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
