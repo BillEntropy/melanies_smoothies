@@ -15,7 +15,7 @@ name = st.text_input('Name on smoothie:')
 
 ing_list = st.multiselect('Choose <= 5 ingredients!',my_df, max_selections=5)
 if ing_list:
-    [st.write(ing_list(fruit)) for fruit in range(len(ing_list)) ]
+    [st.write(ing_list[fruit]) for fruit in range(len(ing_list)) ]
     sf_res = [requests.get(f"https://my.smoothiefroot.com/api/fruit/{ing_list[fruit]}").json() for fruit in range(len(ing_list))]
     st_df = [st.dataframe(data=res, use_container_width=True) for res in sf_res]
     ing_str = ' '.join(ing_list)
