@@ -25,4 +25,5 @@ if ing_list:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered!', icon="✅")
 
-smoothiefroot_res = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+sf_res = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon").json()
+st_df = st.dataframe(data=sf_res, use_container_width=True)
